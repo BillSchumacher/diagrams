@@ -20,7 +20,7 @@ class DiagramTest(unittest.TestCase):
         except OSError:
             # Consider it file
             try:
-                os.remove(self.name + ".png")
+                os.remove(f"{self.name}.png")
             except FileNotFoundError:
                 pass
 
@@ -124,7 +124,7 @@ class DiagramTest(unittest.TestCase):
         self.assertTrue(os.path.exists(f"{self.name}.dot"))
 
         # clean the dot file as it only generated here
-        os.remove(self.name + ".dot")
+        os.remove(f"{self.name}.dot")
 
 
 class ClusterTest(unittest.TestCase):

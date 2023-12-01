@@ -140,9 +140,8 @@ class Diagram:
             for one_format in outformat:
                 if not self._validate_outformat(one_format):
                     raise ValueError(f'"{one_format}" is not a valid output format')
-        else:
-            if not self._validate_outformat(outformat):
-                raise ValueError(f'"{outformat}" is not a valid output format')
+        elif not self._validate_outformat(outformat):
+            raise ValueError(f'"{outformat}" is not a valid output format')
         self.outformat = outformat
 
         # Merge passed in attributes
@@ -232,7 +231,7 @@ class Cluster:
         if graph_attr is None:
             graph_attr = {}
         self.label = label
-        self.name = "cluster_" + self.label
+        self.name = f"cluster_{self.label}"
 
         self.dot = Digraph(self.name)
 
@@ -308,11 +307,7 @@ class Node:
 
         if self._diagram.autolabel:
             prefix = self.__class__.__name__
-            if self.label:
-                self.label = prefix + "\n" + self.label
-            else:
-                self.label = prefix
-
+            self.label = prefix + "\n" + self.label if self.label else prefix
         # fmt: off
         # If a node has an icon, increase the height slightly to avoid
         # that label being spanned between icon image and white space.
@@ -535,9 +530,8 @@ class Edge:
         else:
             if self.node is not None:
                 return self.node.connect(other, self)
-            else:
-                self.node = other
-                return self
+            self.node = other
+            return self
 
     @property
     def attrs(self) -> Dict:

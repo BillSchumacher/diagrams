@@ -10,13 +10,16 @@ from diagrams.c4 import Person, Container, Database, System, SystemBoundary, Rel
 
 class C4Test(unittest.TestCase):
     def setUp(self):
-        self.name = "diagram-" + "".join([random.choice(string.hexdigits) for n in range(7)]).lower()
+        self.name = (
+            "diagram-"
+            + "".join([random.choice(string.hexdigits) for _ in range(7)]).lower()
+        )
 
     def tearDown(self):
         setdiagram(None)
         setcluster(None)
         try:
-            os.remove(self.name + ".png")
+            os.remove(f"{self.name}.png")
         except FileNotFoundError:
             pass
 
